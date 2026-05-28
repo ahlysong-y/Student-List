@@ -16,7 +16,7 @@
                 @if($student->photo)
                     <img src="{{ asset('storage/' . $student->photo) }}" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
                 @else
-                    <img src="https://via.placeholder.com/150" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
+                    <img src="https://placehold.co/150x150" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
                 @endif
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">ប្តូររូបថតថ្មី</label>

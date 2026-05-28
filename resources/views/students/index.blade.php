@@ -73,7 +73,7 @@
                             @if($student->photo)
                                 <img src="{{ asset('storage/' . $student->photo) }}" alt="Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
                             @else
-                                <img src="https://via.placeholder.com/150" alt="Default Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
+                                <img src="https://placehold.co/150x150" alt="Default Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
                             @endif
                         </td>
                         <td class="p-4 font-semibold text-gray-700 whitespace-nowrap">{{ $student->stuno }}</td>

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.env') === 'production' || str_contains(config('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
+
         try {
             // ១. ពិនិត្យ និងរត់បង្កើត Table ទាំងអស់ជាមុនសិន ប្រសិនបើមិនទាន់មាន Table "students"
             if (config('database.default') === 'sqlite' && !Schema::hasTable('students')) {

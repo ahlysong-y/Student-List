@@ -8,7 +8,7 @@
             @if($student->photo)
                 <img src="{{ asset('storage/' . $student->photo) }}" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
             @else
-                <img src="https://via.placeholder.com/150" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
+                <img src="https://placehold.co/150x150" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
             @endif
             <span class="absolute bottom-1 right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full border-2 border-white">សកម្ម</span>
         </div>
