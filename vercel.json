@@ -24,6 +24,8 @@
     ],
     "outputDirectory": "public",
     "env": {
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "/tmp/database.sqlite",
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://studentlist-drab.vercel.app",
