@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('districts', function (Blueprint $table) {
             $table->id();
+            $table->integer('province_id');
+            $table->string('name'); // កំណត់ឱ្យទៅជា name_kh ចំៗតែម្តង
             $table->timestamps();
         });
     }

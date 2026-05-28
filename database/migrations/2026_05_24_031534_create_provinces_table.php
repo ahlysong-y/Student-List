@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // បន្ថែម Column នេះចូល
+            // $table->string('name_en')->nullable(); // (បើមាន)
             $table->timestamps();
         });
     }
