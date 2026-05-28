@@ -7,23 +7,27 @@
             <h1 class="text-2xl font-bold text-indigo-900">បញ្ជីឈ្មោះសិស្ស</h1>
             <p class="text-sm text-gray-500">គ្រប់គ្រង និងមើលព័ត៌មានលម្អិតរបស់សិស្សទាំងអស់</p>
         </div>
-        
+
         <div class="flex flex-wrap items-center gap-2">
             <!-- Export Buttons -->
             <button onclick="window.print()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg shadow-sm transition border border-gray-200 flex items-center gap-1 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
                 Print
             </button>
             <button onclick="exportToExcel()" class="bg-green-50 hover:bg-green-100 text-green-700 px-3 py-2 rounded-lg shadow-sm transition border border-green-200 flex items-center gap-1 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                 Excel
             </button>
             <button onclick="exportToWord()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-2 rounded-lg shadow-sm transition border border-blue-200 flex items-center gap-1 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                 Word
             </button>
             <button onclick="exportToPDF()" class="bg-red-50 hover:bg-red-100 text-red-700 px-3 py-2 rounded-lg shadow-sm transition border border-red-200 flex items-center gap-1 text-sm font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                 PDF
             </button>
 
@@ -71,9 +75,15 @@
                     <tr class="hover:bg-slate-50/80 transition duration-200">
                         <td class="p-4 whitespace-nowrap">
                             @if($student->photo)
-                                <img src="{{ asset('storage/' . $student->photo) }}" alt="Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
+                            {{-- ពិនិត្យថាបើឈ្មោះរូបភាពមានពាក្យ http គឺវាជាលីង URL របស់ FreeImage ស្រាប់ ហៅមកចំៗតែម្តង --}}
+                            @if(str_starts_with($student->photo, 'http://') || str_starts_with($student->photo, 'https://'))
+                            <img src="{{ $student->photo }}" alt="Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
                             @else
-                                <img src="https://placehold.co/150x150" alt="Default Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
+                            {{-- ករណីនេះសម្រាប់រូបភាពចាស់ៗដែលនៅក្នុង storage ម៉ាស៊ីន (បើមាន) --}}
+                            <img src="{{ asset('storage/' . $student->photo) }}" alt="Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
+                            @endif
+                            @else
+                            <img src="https://placehold.co/150x150" alt="Default Photo" class="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100">
                             @endif
                         </td>
                         <td class="p-4 font-semibold text-gray-700 whitespace-nowrap">{{ $student->stuno }}</td>
@@ -151,7 +161,9 @@
 
     function exportToExcel() {
         let table = getCleanTable();
-        let wb = XLSX.utils.table_to_book(table, {sheet: "Students"});
+        let wb = XLSX.utils.table_to_book(table, {
+            sheet: "Students"
+        });
         XLSX.writeFile(wb, "students_list.xlsx");
     }
 
@@ -160,7 +172,7 @@
         let footer = "</body></html>";
         let table = getCleanTable();
         let sourceHTML = header + table.outerHTML + footer;
-        
+
         let source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
         let fileDownload = document.createElement("a");
         document.body.appendChild(fileDownload);
@@ -181,7 +193,7 @@
             cell.style.fontSize = '12px';
             cell.style.textAlign = 'left';
         });
-        
+
         // Add a title
         let title = document.createElement('h2');
         title.innerText = 'បញ្ជីឈ្មោះសិស្ស';
@@ -191,14 +203,25 @@
         tableContainer.appendChild(table);
 
         let opt = {
-            margin:       0.3,
-            filename:     'students_list.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'in', format: 'a3', orientation: 'landscape' }
+            margin: 0.3
+            , filename: 'students_list.pdf'
+            , image: {
+                type: 'jpeg'
+                , quality: 0.98
+            }
+            , html2canvas: {
+                scale: 2
+                , useCORS: true
+            }
+            , jsPDF: {
+                unit: 'in'
+                , format: 'a3'
+                , orientation: 'landscape'
+            }
         };
-        
+
         html2pdf().set(opt).from(tableContainer).save();
     }
+
 </script>
 @endsection
