@@ -6,6 +6,10 @@
     },
     "routes": [
         {
+            "src": "/_vercel/insights/script.js",
+            "dest": "/_vercel/insights/script.js"
+        },
+        {
             "src": "/build/(.*)",
             "dest": "/build/$1"
         },
@@ -21,8 +25,8 @@
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
-        "APP_URL": "https://your-app-name.vercel.app",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://studentlist-drab.vercel.app",
         "APP_KEY": "base64:xTIevH37mZoJSezaroTJSer/ib7kD5n15pkhNSpuJk4=",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
