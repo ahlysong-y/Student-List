@@ -1,30 +1,33 @@
 <?php
 
-// 1. បង្កើតឯកសារ sqlite ក្នុង /tmp បើវាមិនទាន់មាន
+// ១. ទាញយក Composer Autoloader (សំខាន់បំផុតដើម្បីបំបាត់ Error មុននេះ)
+require __DIR__ . '/../vendor/autoload.php';
+
+// ២. បង្កើតឯកសារ sqlite ក្នុង /tmp បើវាមិនទាន់មាន
 if (!file_exists('/tmp/database.sqlite')) {
     touch('/tmp/database.sqlite');
 }
 
-// 2. ទាញយកឯកសារ Bootstrap របស់ Laravel មកទុកក្នុង Variable ដើម្បីប្រើប្រាស់ Artisan
+// ៣. ទាញយកឯកសារ Bootstrap របស់ Laravel
 $app = require __DIR__ . '/../bootstrap/app.php';
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-// 3. បង្កើតសេវាកម្មសាកល្បង៖ ប្រសិនបើ Table "students" មិនទាន់មាន ឱ្យវារត់ Migrate ភ្លាម
+// ៤. រត់ Migrate ស្វ័យប្រវត្ត ប្រសិនបើមិនទាន់មាន Table "students"
 try {
     if (!Illuminate\Support\Facades\Schema::hasTable('students')) {
         Illuminate\Support\Facades\Artisan::call('migrate', [
             '--force' => true,
         ]);
 
-        // ប្រសិនបើអ្នកមានទិន្នន័យទំព័រខេត្ត (Provinces Seeder) អាចបើកកូដខាងក្រោមនេះបាន
+        // ប្រសិនបើអ្នកចង់រត់ Seeder សម្រាប់ទិន្នន័យខេត្ត អាចបើកកូដខាងក្រោមនេះបាន៖
         // Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
     }
 } catch (\Exception $e) {
     // ការពារកុំឱ្យគាំងទំព័រ ប្រសិនបើមានបញ្ហាផ្នែក Database សារជាថ្មី
 }
 
-// 4. បន្តដំណើរការ Request ទៅកាន់ទំព័រធម្មតា
+// ៥. បន្តដំណើរការ Request ទៅកាន់ទំព័រធម្មតា
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
