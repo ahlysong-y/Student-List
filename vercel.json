@@ -26,8 +26,8 @@
     "env": {
         "DB_CONNECTION": "sqlite",
         "DB_DATABASE": "/tmp/database.sqlite",
-        "APP_ENV": "production",
-        "APP_DEBUG": "true",
+        "APP_ENV": "student_list",
+        "APP_DEBUG": "false",
         "APP_URL": "https://studentlist-drab.vercel.app",
         "APP_KEY": "base64:xTIevH37mZoJSezaroTJSer/ib7kD5n15pkhNSpuJk4=",
 
