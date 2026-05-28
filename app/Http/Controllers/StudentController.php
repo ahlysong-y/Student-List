@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http; // គន្លឹះសំខាន់៖ ត្រូវមាន Class នេះសម្រាប់ហៅទៅ API
 
 class StudentController extends Controller
 {
@@ -32,6 +33,11 @@ class StudentController extends Controller
     // មុខងារទទួលទិន្នន័យពី Form រួចរក្សាទុកក្នុង Database (Store)
     public function store(Request $request)
     {
+        // ធ្វើការ Validate ទិន្នន័យជាមុនសិន
+        $request->validate([
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
         $data = $request->all();
 
         // --- កូដបង្កើតអត្តលេខសិស្ស Auto ឡើងវិញពេលចុច Save ដើម្បីការពារការខកខានតម្លៃពី Form ---
@@ -44,8 +50,26 @@ class StudentController extends Controller
         $data['stuno'] = $newStuNo;
         // --------------------------------------------------------------------------------
 
+        // ពិនិត្យមើលថាតើមានការជ្រើសរើសរូបភាពដែរឬទេ
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('students', 'public');
+            $image = $request->file('photo');
+
+            // ១. បំប្លែងរូបភាពទៅជា Base64
+            $imageData = base64_encode(file_get_contents($image->path()));
+
+            // ២. ផ្ញើរូបភាពទៅកាន់ FreeImage API 
+            $response = Http::asForm()->post('https://freeimage.host/api/1/upload', [
+                'key' => env('FREEIMAGE_API_KEY'),
+                'source' => $imageData,
+                'format' => 'json'
+            ]);
+
+            // ៣. បើផ្ញើទៅ Cloud ជោគជ័យ យក Link មកជំនួសឈ្មោះ File
+            if ($response->successful()) {
+                $data['photo'] = $response->json()['image']['url'];
+            } else {
+                return back()->withErrors(['photo' => 'មិនអាច Upload រូបភាពទៅកាន់ Cloud បានឡើយ។ សូមព្យាយាមម្តងទៀត!'])->withInput();
+            }
         }
 
         Student::create($data);
@@ -68,10 +92,34 @@ class StudentController extends Controller
     // មុខងារធ្វើបច្ចុប្បន្នភាពទិន្នន័យដែលកែប្រែរួច (Update)
     public function update(Request $request, Student $student)
     {
+        $request->validate([
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
         $data = $request->all();
 
+        // ពិនិត្យមើលថាតើមានការជ្រើសរើសរូបភាពថ្មីដើម្បីដូរដែរឬទេ
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('students', 'public');
+            $image = $request->file('photo');
+
+            // ១. បំប្លែងរូបភាពថ្មីទៅជា Base64
+            $imageData = base64_encode(file_get_contents($image->path()));
+
+            // ២. ផ្ញើរូបភាពថ្មីទៅកាន់ FreeImage API 
+            $response = Http::asForm()->post('https://freeimage.host/api/1/upload', [
+                'key' => env('FREEIMAGE_API_KEY'),
+                'source' => $imageData,
+                'format' => 'json'
+            ]);
+
+            if ($response->successful()) {
+                $data['photo'] = $response->json()['image']['url'];
+            } else {
+                return back()->withErrors(['photo' => 'មិនអាច ប្តូររូបភាពថ្មីទៅកាន់ Cloud បានឡើយ។'])->withInput();
+            }
+        } else {
+            // បើអត់ជ្រើសរូបភាពថ្មីទេ រក្សារូបភាពចាស់ដែលមានក្នុង DB ដដែល
+            $data['photo'] = $student->photo;
         }
 
         $student->update($data);
