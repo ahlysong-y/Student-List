@@ -18,13 +18,18 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     */
-    public function boot(): void
+     */ public function boot(): void
     {
-        // រត់ Migrate ស្វ័យប្រវត្តនៅលើ Vercel ប្រសិនបើគ្មាន Table "students"
+        // រត់ Migrate និង Seed ស្វ័យប្រវត្តនៅលើ Vercel
         try {
             if (config('database.default') === 'sqlite' && !Schema::hasTable('students')) {
+                // ១. រត់បង្កើត Table ទាំងអស់
                 Artisan::call('migrate', [
+                    '--force' => true,
+                ]);
+
+                // ២. រត់បញ្ចូលទិន្នន័យខេត្ត/ក្រុង (ដោះខមិនជួរកូដខាងក្រោមនេះ)
+                Artisan::call('db:seed', [
                     '--force' => true,
                 ]);
             }
