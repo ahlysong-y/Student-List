@@ -34,12 +34,20 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            // កូដខាងក្រោមនេះ គឺពិនិត្យថាបើដំណើរការលើ Vercel ឲ្យវាទៅអានក្នុង /tmp បើលើម៉ាស៊ីនផ្ទាល់ឲ្យអានធម្មតា
+            'database' => env('DB_DATABASE', function () {
+                if (env('VERCEL_ENV') || isset($_ENV['VERCEL_ENV'])) {
+                    $vercelDb = '/tmp/database.sqlite';
+                    if (!file_exists($vercelDb)) {
+                        // ចម្លងឯកសារ Database ពីកូដដើមទៅកាន់ Folder /tmp របស់ Vercel
+                        copy(database_path('database.sqlite'), $vercelDb);
+                    }
+                    return $vercelDb;
+                }
+                return database_path('database.sqlite');
+            }),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-            'busy_timeout' => null,
-            'journal_mode' => null,
-            'synchronous' => null,
         ],
 
         'mysql' => [
