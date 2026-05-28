@@ -23,46 +23,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         try {
+            // ១. រត់បង្កើត Table ទាំងអស់ ប្រសិនបើមិនទាន់មាន
             if (config('database.default') === 'sqlite' && !Schema::hasTable('students')) {
-                // ១. រត់បង្កើត Table ទាំងអស់ទៅក្នុង SQLite
                 Artisan::call('migrate', [
                     '--force' => true,
                 ]);
+            }
 
-                // ២. បញ្ចូលទិន្នន័យខេត្ត/ក្រុងទៅក្នុង Table "provinces" ដោយស្វ័យប្រវត្ត
-                if (Schema::hasTable('provinces') && DB::table('provinces')->count() == 0) {
-                    $provinces = [
-                        ['name' => 'ភ្នំពេញ'],
-                        ['name' => 'សៀមរាប'],
-                        ['name' => 'ព្រះសីហនុ'],
-                        ['name' => 'បាត់ដំបង'],
-                        ['name' => 'កំពង់ចាម'],
-                        ['name' => 'កំពង់ធំ'],
-                        ['name' => 'កំពង់ស្ពឺ'],
-                        ['name' => 'កំពង់ឆ្នាំង'],
-                        ['name' => 'កណ្តាល'],
-                        ['name' => 'កែប'],
-                        ['name' => 'កោះកុង'],
-                        ['name' => 'ក្រចេះ'],
-                        ['name' => 'មណ្ឌលគិរី'],
-                        ['name' => 'ព្រះវិហារ'],
-                        ['name' => 'ព្រៃវែង'],
-                        ['name' => 'ពោធិ៍សាត់'],
-                        ['name' => 'រតនគិរី'],
-                        ['name' => 'ស្ទឹងត្រែង'],
-                        ['name' => 'ស្វាយរៀង'],
-                        ['name' => 'តាកែវ'],
-                        ['name' => 'ឧត្តរមានជ័យ'],
-                        ['name' => 'ប៉ៃលិន'],
-                        ['name' => 'បន្ទាយមានជ័យ'],
-                        ['name' => 'ត្បូងឃ្មុំ']
-                    ];
+            // ២. ពិនិត្យមើលថាតើ Table provinces នៅទទេមែនទេ? បើទទេ ឱ្យវាទាញទិន្នន័យពី SQL មកបញ្ចូល
+            if (Schema::hasTable('provinces') && DB::table('provinces')->count() == 0) {
 
-                    DB::table('provinces')->insert($provinces);
+                // ផ្លូវទៅកាន់ឯកសារ SQL របស់អ្នក (ឧទាហរណ៍៖ ដាក់ក្នុង folder database)
+                $sqlPath = database_path('cambodia_geometry.sql');
+
+                if (file_exists($sqlPath)) {
+                    // អានកូដ SQL រួចរត់ដំឡើងចូល Database ទាំងអស់តែម្តង
+                    DB::unprepared(file_get_contents($sqlPath));
                 }
             }
         } catch (\Exception $e) {
-            // ការពារកុំឱ្យគាំង ប្រសិនបើមានបញ្ហាផ្សេងៗ
+            // ការពារកុំឱ្យគាំងប្រព័ន្ធ
         }
     }
 }
