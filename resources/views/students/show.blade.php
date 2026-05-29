@@ -5,10 +5,15 @@
 
     <div class="md:col-span-1 bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center animate__animated animate__fadeInLeft">
         <div class="relative inline-block mb-4">
+            {{-- បានកែប្រែ៖ ប្លុកឆែកលក្ខខណ្ឌបង្ហាញរូបភាពដើម្បីកុំឱ្យដាច់រូបភាពលើ Vercel --}}
             @if($student->photo)
-                <img src="{{ asset('storage/' . $student->photo) }}" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
+            @if(str_starts_with($student->photo, 'http://') || str_starts_with($student->photo, 'https://'))
+            <img src="{{ $student->photo }}" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
             @else
-                <img src="https://placehold.co/150x150" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
+            <img src="{{ asset('storage/' . $student->photo) }}" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
+            @endif
+            @else
+            <img src="https://placehold.co/150x150" alt="Student Photo" class="w-32 h-32 rounded-full mx-auto object-cover ring-4 ring-indigo-50 shadow-md">
             @endif
             <span class="absolute bottom-1 right-2 bg-green-500 text-white text-xs px-2 py-0.5 rounded-full border-2 border-white">សកម្ម</span>
         </div>

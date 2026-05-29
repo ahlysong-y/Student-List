@@ -8,16 +8,23 @@
             <span class="bg-amber-700/50 px-3 py-1 rounded text-xs uppercase">{{ $student->stuno ?? 'STU-001' }}</span>
         </div>
 
-        <form action="{{ route('students.update', 1) }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-6">
+        {{-- បានកែប្រែ៖ ប្តូរលេខ 1 ទៅជា $student->id ដើម្បីឱ្យកែប្រែចំសិស្សម្នាក់ៗ --}}
+        <form action="{{ route('students.update', $student->id) }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-6">
             @csrf
             @method('PUT')
 
             <div class="flex items-center gap-4 bg-amber-50/50 p-4 rounded-xl border border-amber-100/70">
+                {{-- បានកែប្រែ៖ ប្លុកឆែកលក្ខខណ្ឌបង្ហាញរូបភាពដើម្បីកុំឱ្យដាច់រូបភាពលើ Vercel --}}
                 @if($student->photo)
-                    <img src="{{ asset('storage/' . $student->photo) }}" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
+                @if(str_starts_with($student->photo, 'http://') || str_starts_with($student->photo, 'https://'))
+                <img src="{{ $student->photo }}" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
                 @else
-                    <img src="https://placehold.co/150x150" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
+                <img src="{{ asset('storage/' . $student->photo) }}" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
                 @endif
+                @else
+                <img src="https://placehold.co/150x150" alt="Current Photo" class="w-16 h-16 rounded-lg object-cover ring-4 ring-white shadow">
+                @endif
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">ប្តូររូបថតថ្មី</label>
                     <input type="file" name="photo" class="text-sm text-gray-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 cursor-pointer">
@@ -27,11 +34,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">ឈ្មោះខ្មែរ</label>
-                    <input type="text" name="khmername" value="{{ $student->khmername ?? 'សុខ សាន្ត' }}" class="w-full rounded-lg border-gray-200 p-2.5 text-sm focus:border-amber-500 focus:ring-amber-200">
+                    <input type="text" name="khmername" value="{{ $student->khmername ?? '' }}" class="w-full rounded-lg border-gray-200 p-2.5 text-sm focus:border-amber-500 focus:ring-amber-200">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">ឈ្មោះអង់គ្លេស</label>
-                    <input type="text" name="englishname" value="{{ $student->englishname ?? 'Sok Sant' }}" class="w-full rounded-lg border-gray-200 p-2.5 text-sm focus:border-amber-500 focus:ring-amber-200">
+                    <input type="text" name="englishname" value="{{ $student->englishname ?? '' }}" class="w-full rounded-lg border-gray-200 p-2.5 text-sm focus:border-amber-500 focus:ring-amber-200">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">សញ្ជាតិ</label>
