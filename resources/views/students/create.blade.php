@@ -9,6 +9,23 @@
         ត្រឡប់ទៅបញ្ជីឈ្មោះ
     </a>
 
+    {{-- បានបន្ថែម៖ ប្លុកបង្ហាញ Error ថ្មី មិនប៉ះពាល់ដល់ទំហំ Form --}}
+    @if ($errors->any())
+    <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl animate__animated animate__fadeIn">
+        <div class="flex items-center gap-2 text-red-800 font-bold mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>សូមពិនិត្យមើលចំណុចខ្វះខាតខាងក្រោម៖</span>
+        </div>
+        <ul class="list-disc pl-5 text-sm text-red-600 space-y-1">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
         <div class="bg-indigo-900 px-6 py-4 text-white">
             <h2 class="text-xl font-bold">ទម្រង់ចុះឈ្មោះសិស្សថ្មី</h2>
@@ -21,7 +38,7 @@
             <div>
                 <h3 class="text-md font-semibold text-indigo-900 border-b border-indigo-100 pb-2 mb-4">១. ព័ត៌មានផ្ទាល់ខ្លួនសិស្ស</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">ឈ្មោះខ្មែរ *</label>
                         <input type="text" name="khmername" class="w-full rounded-lg border-gray-200 p-2.5 text-sm focus:border-indigo-500 focus:ring-indigo-200 bg-gray-50 focus:bg-white transition" required>
@@ -63,13 +80,13 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">បន្ទប់/ថ្នាក់</label>
                         <select name="room" class="w-full rounded-lg border-gray-200 p-2.5 text-sm focus:border-indigo-500 focus:ring-indigo-200 bg-gray-50 transition">
-                            <option value="">ជ្រើសរើសថ្នាក់</option>
-                            <option value="ថ្នាក់ទី ៧">ថ្នាក់ទី ៧</option>
-                            <option value="ថ្នាក់ទី ៨">ថ្នាក់ទី ៨</option>
-                            <option value="ថ្នាក់ទី ៩">ថ្នាក់ទី ៩</option>
-                            <option value="ថ្នាក់ទី ១០">ថ្នាក់ទី ១០</option>
-                            <option value="ថ្នាក់ទី ១១">ថ្នាក់ទី ១១</option>
-                            <option value="ថ្នាក់ទី ១២">ថ្នាក់ទី ១២</option>
+                            <option value="">បន្ទប់ថ្នាក់</option>
+                            <option value="101">101</option>
+                            <option value="102">102</option>
+                            <option value="103">103</option>
+                            <option value="104">104</option>
+                            <option value="105">105</option>
+                            <option value="106">106</option>
                         </select>
                     </div>
                     <div>
@@ -192,7 +209,6 @@
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(district => {
-                            // បានកែពី .name_kh មកជា .name ឱ្យត្រូវតាម Database របស់អ្នក
                             districtSelect.innerHTML += `<option value="${district.id}">${district.name}</option>`;
                         });
                         districtSelect.disabled = false;
@@ -214,7 +230,6 @@
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(commune => {
-                            // បានកែពី .name_kh មកជា .name
                             communeSelect.innerHTML += `<option value="${commune.id}">${commune.name}</option>`;
                         });
                         communeSelect.disabled = false;
@@ -234,7 +249,6 @@
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(village => {
-                            // បានកែពី .name_kh មកជា .name
                             villageSelect.innerHTML += `<option value="${village.id}">${village.name}</option>`;
                         });
                         villageSelect.disabled = false;

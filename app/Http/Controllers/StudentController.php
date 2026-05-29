@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http; // គន្លឹះសំខាន់៖ ត្រូវមាន Class នេះសម្រាប់ហៅទៅ API
+use Illuminate\Support\Facades\Http;
 
 class StudentController extends Controller
 {
@@ -64,11 +64,15 @@ class StudentController extends Controller
                 'format' => 'json'
             ]);
 
-            // ៣. បើផ្ញើទៅ Cloud ជោគជ័យ យក Link មកជំនួសឈ្មោះ File
-            if ($response->successful()) {
-                $data['photo'] = $response->json()['image']['url'];
+            // ៣. ពិនិត្យមើលលទ្ធផលឆ្លើយតប និងទម្រង់ JSON
+            $responseData = $response->json();
+
+            if ($response->successful() && isset($responseData['image']['url'])) {
+                $data['photo'] = $responseData['image']['url'];
             } else {
-                return back()->withErrors(['photo' => 'មិនអាច Upload រូបភាពទៅកាន់ Cloud បានឡើយ។ សូមព្យាយាមម្តងទៀត!'])->withInput();
+                // ប្រសិនបើ API ផ្ញើមកខុសទម្រង់ ឬបរាជ័យ
+                $errorMsg = $responseData['error']['message'] ?? 'មិនអាច Upload រូបភាពទៅកាន់ Cloud បានឡើយ។';
+                return back()->withErrors(['photo' => $errorMsg . ' សូមពិនិត្យមើល FREEIMAGE_API_KEY លើ Vercel ឡើងវិញ!'])->withInput();
             }
         }
 
@@ -112,10 +116,13 @@ class StudentController extends Controller
                 'format' => 'json'
             ]);
 
-            if ($response->successful()) {
-                $data['photo'] = $response->json()['image']['url'];
+            $responseData = $response->json();
+
+            if ($response->successful() && isset($responseData['image']['url'])) {
+                $data['photo'] = $responseData['image']['url'];
             } else {
-                return back()->withErrors(['photo' => 'មិនអាច ប្តូររូបភាពថ្មីទៅកាន់ Cloud បានឡើយ។'])->withInput();
+                $errorMsg = $responseData['error']['message'] ?? 'មិនអាច ប្តូររូបភាពថ្មីទៅកាន់ Cloud បានឡើយ។';
+                return back()->withErrors(['photo' => $errorMsg . ' សូមពិនិត្យមើល FREEIMAGE_API_KEY លើ Vercel ឡើងវិញ!'])->withInput();
             }
         } else {
             // បើអត់ជ្រើសរូបភាពថ្មីទេ រក្សារូបភាពចាស់ដែលមានក្នុង DB ដដែល
